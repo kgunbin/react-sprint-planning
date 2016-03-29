@@ -1,7 +1,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 
-var socket = io('http://localhost:3009');
+var socket = io('http://localhost:3009', {query: 'room=123'});
 
 var Component = React.createClass({
   getInitialState() {

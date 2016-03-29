@@ -1,20 +1,22 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var users = 0;
+var users = [];
 
 app.get('/', (req, res)=> {
   res.send('<h1>Yep, working</h1>');
 });
 
 io.on('connection', (socket)=> {
-  console.log('a user connected');
-  io.emit('user:join', {user: users++});
+  users.push({id: socket.id});
+  console.log(socket.handshake.query.param);
+
+  io.emit('user:join', {user: socket.id});
   socket.on('chat message', (msg)=> {
     io.emit('chat message', msg);
   });
   socket.on('disconnect', ()=> {
-    console.log('user disconnected');
+    io.emit('user:left', {user: users.size});
   });
 });
 
