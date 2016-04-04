@@ -1,7 +1,8 @@
 import React from 'react';
 import io from 'socket.io-client';
+import messageTypes from '../../common/constants';
 
-var socket = io('http://localhost:3009', {query: 'room=123'});
+const socket = io('http://localhost:3009');
 
 var Component = React.createClass({
   getInitialState() {
@@ -11,13 +12,13 @@ var Component = React.createClass({
   },
   componentDidMount() {
     socket.on('connect', this._handleInit);
-    socket.on('user:join', this._handleJoin);
+    socket.on(messageTypes.NEW_USER, this._handleJoin);
   },
   _handleInit(data) {
     this._addMessage('Connected');
   },
   _handleJoin(data) {
-    this._addMessage('User joined: ' + data.user);
+    this._addMessage('User joined: ' + data);
   },
   _addMessage(message) {
     var messages = this.state.messages;
@@ -39,6 +40,7 @@ var Component = React.createClass({
             );
           })
         }
+        <input type='button' onClick={() => socket.emit(messageTypes.NEW_ROOM, 'Room 1')} />
       </div>
     );
   },

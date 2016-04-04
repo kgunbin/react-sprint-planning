@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Component from './Component';
+import Application from './Application';
 
 ReactDOM.render(
-  <Component />,
+  <Application />,
   document.querySelector('#container')
 );

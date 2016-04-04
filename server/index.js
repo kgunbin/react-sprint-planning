@@ -1,22 +1,25 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var users = [];
+
+import CONST from '../common/constants';
+
+var storage = {};
+var rooms = [];
 
 app.get('/', (req, res)=> {
   res.send('<h1>Yep, working</h1>');
 });
 
 io.on('connection', (socket)=> {
-  users.push({id: socket.id});
-  console.log(socket.handshake.query.param);
-
-  io.emit('user:join', {user: socket.id});
-  socket.on('chat message', (msg)=> {
-    io.emit('chat message', msg);
-  });
-  socket.on('disconnect', ()=> {
-    io.emit('user:left', {user: users.size});
+  socket.on(CONST.NEW_ROOM, (room)=> {
+    socket.join(room);
+    if (typeof rooms[room] === "undefined") {
+      rooms[room] = {users: [socket.id];
+    } else {
+      rooms[room].users.push(socket.id);
+    }
+    io.to(room).emit(CONST.NEW_USER, new Set(rooms[room].users).size);
   });
 });
 
