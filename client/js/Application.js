@@ -1,24 +1,23 @@
 import React from 'react';
-import {Button, Input, Row, Col} from 'react-bootstrap';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import Container from './components/Container';
+import reducers from './reducers';
+import io from 'socket.io-client';
+import createSocketIoMiddleware from 'redux-socket.io';
+
+let socket = io('http://localhost:3009');
+
+let socketMiddleware = createSocketIoMiddleware(socket, 'SERVER_');
+let store = createStore(reducers, applyMiddleware(thunk, socketMiddleware));
 
 export default class Application extends React.Component {
   render() {
     return (
-      <div>
-        <Row>
-          <Col md={12}>
-            <Button>Create new session</Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={8}>
-            <Input type='text' />
-          </Col>
-          <Col md={4}>
-            <Button bsStyle='primary'>Join</Button>
-          </Col>
-        </Row>
-      </div>
+      <Provider store={store}>
+        <Container />
+      </Provider>
     );
   }
 }
