@@ -2,7 +2,7 @@ import actionTypes from '../../../common/constants';
 
 function join(roomId) {
   return {
-    type: actionTypes.JOIN_ROOM,
+    type: actionTypes.SERVER_JOIN_ROOM,
     room: roomId
   };
 }

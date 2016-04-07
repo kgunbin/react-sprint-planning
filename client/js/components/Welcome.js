@@ -1,24 +1,42 @@
-mport React from 'react';
+import React from 'react';
 import {Button, Input, Row, Col} from 'react-bootstrap';
 
-export default class Welcome extends React.Component {
+class Welcome extends React.Component {
+  static propTypes = {
+    onCreate: React.PropTypes.function,
+    onJoin: React.PropTypes.function
+  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      room: null
+    };
+    // this.handleRoomChange.bind(this);
+  }
+  handleRoomChange = (e) => {
+    this.setState({
+      room: e.target.value
+    });
+  }
   render() {
     return (
       <div>
         <Row>
           <Col md={12}>
-            <Button>Create new session</Button>
+            <Button onClick={this.props.onCreate}>Create new session</Button>
           </Col>
         </Row>
         <Row>
           <Col md={8}>
-            <Input type='text' />
+            <Input type='text' value={this.state.room} onChange={this.handleRoomChange}/>
           </Col>
           <Col md={4}>
-            <Button bsStyle='primary'>Join</Button>
+            <Button bsStyle='primary' onClick={() => this.props.onJoin(this.state.room)}>Join</Button>
           </Col>
         </Row>
       </div>
     );
   }
 }
+
+export default Welcome;

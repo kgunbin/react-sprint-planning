@@ -2,7 +2,9 @@ import { combineReducers } from 'redux';
 import actionTypes from '../../../common/constants';
 
 function users(state = [], action) {
-
+  if (action.type === actionTypes.NEW_USER) {
+    return action.users;
+  }
   return state;
 };
 
