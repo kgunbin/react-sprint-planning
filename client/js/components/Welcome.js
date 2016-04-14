@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Input, Row, Col} from 'react-bootstrap';
+import * as RB from 'react-bootstrap';
 
 class Welcome extends React.Component {
   static propTypes = {
@@ -27,28 +27,35 @@ class Welcome extends React.Component {
   render() {
     return (
       <div>
-        <Row>
-          <Col md={12}>
-            <Input type='text' value={this.state.username} onChange={this.handleUsernameChange} />
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            <Button onClick={() => this.props.onCreate(this.state.username)}>
+        <RB.Jumbotron>
+          <h1>Welcome</h1>
+        </RB.Jumbotron>
+        <RB.Row>
+          <RB.Col md={4}>
+            <p>Pick a user name</p>
+          </RB.Col>
+          <RB.Col md={6}>
+            <RB.Input type='text' value={this.state.username} onChange={this.handleUsernameChange} />
+          </RB.Col>
+        </RB.Row>
+        <RB.Row>
+          <RB.Col md={4}>
+            <RB.Button onClick={() => this.props.onCreate(this.state.username)}>
               Create new session
-            </Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={8}>
-            <Input type='text' value={this.state.room} onChange={this.handleRoomChange}/>
-          </Col>
-          <Col md={4}>
-            <Button bsStyle='primary' onClick={() => this.props.onJoin(this.state.room, this.state.username)}>
+            </RB.Button>
+          </RB.Col>
+          <RB.Col md={1}>
+            <p>or</p>
+          </RB.Col>
+          <RB.Col md={4}>
+            <RB.Input type='text' value={this.state.room} onChange={this.handleRoomChange}/>
+          </RB.Col>
+          <RB.Col md={3}>
+            <RB.Button bsStyle='primary' onClick={() => this.props.onJoin(this.state.room, this.state.username)}>
               Join
-            </Button>
-          </Col>
-        </Row>
+            </RB.Button>
+          </RB.Col>
+        </RB.Row>
       </div>
     );
   }

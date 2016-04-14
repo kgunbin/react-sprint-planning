@@ -3,7 +3,9 @@ import React from 'react';
 import actionCreators from '../actions';
 import { bindActionCreators } from 'redux';
 import Welcome from './Welcome';
+import Room from './Room';
 import _ from 'lodash';
+import * as RB from 'react-bootstrap';
 
 class Container extends React.Component {
   static defaultProps = {
@@ -11,10 +13,15 @@ class Container extends React.Component {
     room: null,
     actions: null
   }
+  static propTypes = {
+    room: React.PropTypes.number,
+    users: React.PropTypes.array,
+    actions: React.PropTypes.object
+  }
   constructor(props) {
     super(props);
   }
-  render() {
+  renderContent = () => {
     var ret;
 
     if (this.props.room == null) {
@@ -26,28 +33,22 @@ class Container extends React.Component {
       );
     } else {
       ret = (
-        <div>
-          <div>
-            {'Connected as ' + this.props.room}
-          </div>
-          {
-            this.props.users.map((user, i) => {
-              return (
-                <div key={i}>{user}</div>
-              );
-            })
-          }
-        </div>);
+        <Room
+          users={this.props.users}
+          room={this.props.room}
+        />
+      );
     }
     return ret;
   }
+  render() {
+    return (
+      <RB.Grid>
+        {this.renderContent()}
+      </RB.Grid>
+    );
+  }
 }
-
-Container.propTypes = {
-  room: React.PropTypes.number,
-  users: React.PropTypes.array,
-  actions: React.PropTypes.object
-};
 
 export default connect((state) => (
   _.pick(state.session, 'room', 'users')
