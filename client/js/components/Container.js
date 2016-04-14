@@ -16,6 +16,7 @@ class Container extends React.Component {
   static propTypes = {
     room: React.PropTypes.number,
     users: React.PropTypes.array,
+    error: React.PropTypes.string,
     actions: React.PropTypes.object
   }
   constructor(props) {
@@ -41,9 +42,19 @@ class Container extends React.Component {
     }
     return ret;
   }
+  renderError = () => {
+    if (this.props.error) {
+      return (
+        <RB.Alert bsStyle='danger' onDismiss={this.props.actions.clearError} dismissAfter={3000}>
+          <p>{this.props.error}</p>
+        </RB.Alert>
+      );
+    }
+  }
   render() {
     return (
       <RB.Grid>
+        {this.renderError()}
         {this.renderContent()}
       </RB.Grid>
     );
@@ -51,7 +62,7 @@ class Container extends React.Component {
 }
 
 export default connect((state) => (
-  _.pick(state.session, 'room', 'users')
+  Object.assign({}, {error: state.error}, _.pick(state.session, 'room', 'users'))
 ), (dispatch) => ({
   actions: bindActionCreators(actionCreators, dispatch)
 }))(Container);

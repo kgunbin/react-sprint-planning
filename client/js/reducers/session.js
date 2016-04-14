@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import actionTypes from '../../../common/constants';
 
 function users(state = [], action) {
-  if (action.type === actionTypes.NEW_USER) {
+  if ([actionTypes.NEW_USER, actionTypes.USER_LEFT].indexOf(action.type) > -1) {
     return action.users;
   }
   return state;
@@ -19,7 +19,7 @@ function jira(state = {enabled: false, username: null, password: null, url: null
 };
 
 function room(state = null, action) {
-  if (action.type === actionTypes.ROOM_CREATED) {
+  if ([actionTypes.ROOM_CREATED, actionTypes.ROOM_JOINED].indexOf(action.type) > -1) {
     return action.room;
   }
   return state;
