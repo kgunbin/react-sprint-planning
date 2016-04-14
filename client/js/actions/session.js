@@ -1,14 +1,18 @@
 import actionTypes from '../../../common/constants';
 
-function join(roomId) {
+function join(roomId, username) {
   return {
     type: actionTypes.SERVER_JOIN_ROOM,
-    room: roomId
+    room: roomId,
+    username: username
   };
 }
 
-function create() {
-  return {type: actionTypes.SERVER_NEW_ROOM};
+function create(username) {
+  return {
+    type: actionTypes.SERVER_NEW_ROOM,
+    username: username
+  };
 }
 
 export {create, join};

@@ -16,7 +16,7 @@ io.on('connection', (socket) => {
   socket.on('action', (action) => {
     switch (action.type) {
       case actionTypes.SERVER_NEW_ROOM:
-        rooms.push({id: ++lastRoomId, users: [socket.id]});
+        rooms.push({id: ++lastRoomId, users: [action.username]});
         socket.join(lastRoomId);
         socket.emit('action', {type: actionTypes.ROOM_CREATED, room: lastRoomId});
         break;
@@ -25,7 +25,7 @@ io.on('connection', (socket) => {
         var roomId = action.room;
         var room = rooms.find((c) => c.id == roomId);
 
-        room.users.push(socket.id);
+        room.users.push(action.username);
         socket.join(roomId);
         socket.to(roomId).emit('action', {type: actionTypes.NEW_USER, users: room.users});
         break;

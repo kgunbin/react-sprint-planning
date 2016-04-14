@@ -9,7 +9,8 @@ class Welcome extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      room: null
+      room: null,
+      username: null
     };
     // this.handleRoomChange.bind(this);
   }
@@ -18,12 +19,24 @@ class Welcome extends React.Component {
       room: e.target.value
     });
   }
+  handleUsernameChange = (e) => {
+    this.setState({
+      username: e.target.value
+    });
+  }
   render() {
     return (
       <div>
         <Row>
           <Col md={12}>
-            <Button onClick={this.props.onCreate}>Create new session</Button>
+            <Input type='text' value={this.state.username} onChange={this.handleUsernameChange} />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
+            <Button onClick={() => this.props.onCreate(this.state.username)}>
+              Create new session
+            </Button>
           </Col>
         </Row>
         <Row>
@@ -31,7 +44,9 @@ class Welcome extends React.Component {
             <Input type='text' value={this.state.room} onChange={this.handleRoomChange}/>
           </Col>
           <Col md={4}>
-            <Button bsStyle='primary' onClick={() => this.props.onJoin(this.state.room)}>Join</Button>
+            <Button bsStyle='primary' onClick={() => this.props.onJoin(this.state.room, this.state.username)}>
+              Join
+            </Button>
           </Col>
         </Row>
       </div>
