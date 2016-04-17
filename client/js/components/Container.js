@@ -17,7 +17,11 @@ class Container extends React.Component {
     room: React.PropTypes.number,
     users: React.PropTypes.array,
     error: React.PropTypes.string,
-    actions: React.PropTypes.object
+    actions: React.PropTypes.shape({
+      join: React.PropTypes.function,
+      create: React.PropTypes.function,
+      clearError: React.PropTypes.function
+    })
   }
   constructor(props) {
     super(props);
