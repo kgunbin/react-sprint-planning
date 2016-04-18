@@ -5,6 +5,7 @@ var fs = require('fs');
 var DeepMerge = require('deep-merge');
 var nodemon = require('nodemon');
 var WebpackDevServer = require('webpack-dev-server');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var deepmerge = DeepMerge(function(target, source, key) {
   if(target instanceof Array) {
@@ -35,14 +36,6 @@ var defaultConfig = {
         test: /(\.jsx|\.js)$/,
         loader: "eslint-loader",
         exclude: /node_modules/
-      },
-      {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract("style-loader", "css-loader")
-      },
-      {
-        test: /\.less$/,
-        loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
       }
     ]
   }
@@ -61,10 +54,19 @@ function config(overrides) {
 // frontend
 
 var frontendConfig = config({
+  module: {
+    loaders: [
+      {
+        test: /\.less$/,
+        loader: 'style-loader!css-loader!less-loader'
+      }
+    ]
+  },
   entry: [
     'webpack-dev-server/client?http://localhost:9000',
     'webpack/hot/only-dev-server',
-    './client/js/index.js'
+    './client/css/base.less',
+    './client/index.js'
   ],
   output: {
     path: path.join(__dirname, 'client/build'),
