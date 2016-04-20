@@ -1,5 +1,6 @@
 import React from 'react';
 import * as RB from 'react-bootstrap';
+import User from './User';
 
 class Room extends React.Component {
   static propTypes = {
@@ -11,20 +12,20 @@ class Room extends React.Component {
   }
   render() {
     return (
-      <RB.Row>
-        <RB.Col md={12}>
-          {'Connected as ' + this.props.room}
-        </RB.Col>
-      <RB.Row>
-      </RB.Row>
+      <div>
+        <RB.Jumbotron>
+          <h2>{'Connected to ' + this.props.room}</h2>
+        </RB.Jumbotron>
+
         {
           this.props.users.map((user, i) => {
             return (
-              <div key={i}>{user}</div>
+              <User key={i} username={user} />
             );
           })
         }
-      </RB.Row>);
+      </div>
+    );
   }
 }
 

@@ -1,3 +1,7 @@
 .no-vote {
+  background-color: red;
+}
 
+.hidden-vote {
+  background-color: green;
 }
