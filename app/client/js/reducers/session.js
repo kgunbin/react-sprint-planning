@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import actionTypes from '../../../common/constants';
+import actionTypes from '../../../shared/constants';
 
 function users(state = [], action) {
   if ([actionTypes.NEW_USER, actionTypes.USER_LEFT].indexOf(action.type) > -1) {

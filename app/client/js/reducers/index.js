@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import session from './session';
 import topic from './topic';
-import actionTypes from '../../../common/constants';
+import actionTypes from '../../../shared/constants';
 
 function error(state = '', action) {
   if (action.type === actionTypes.ERROR) {

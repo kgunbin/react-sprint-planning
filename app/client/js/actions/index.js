@@ -1,5 +1,5 @@
 import * as session from './session';
-import actionTypes from '../../../common/constants';
+import actionTypes from '../../../shared/constants';
 
 function clearError() {
   return {

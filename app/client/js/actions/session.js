@@ -1,4 +1,4 @@
-import actionTypes from '../../../common/constants';
+import actionTypes from '../../../shared/constants';
 
 function join(roomId, username) {
   return {

@@ -1,4 +1,4 @@
-var constants = require.requireActual('../../../../common/constants');
+var constants = require.requireActual('../../../../shared/constants');
 var session = require.requireActual('../session');
 
 describe('session', () => {
