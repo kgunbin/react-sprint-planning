@@ -3,14 +3,14 @@ import * as RB from 'react-bootstrap';
 
 class Welcome extends React.Component {
   static propTypes = {
-    onCreate: React.PropTypes.function,
-    onJoin: React.PropTypes.function
+    onCreate: React.PropTypes.func.isRequired,
+    onJoin: React.PropTypes.func.isRequired
   }
   constructor(props) {
     super(props);
     this.state = {
-      room: null,
-      username: null
+      room: '',
+      username: ''
     };
     // this.handleRoomChange.bind(this);
   }

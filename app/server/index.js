@@ -37,6 +37,8 @@ function initSockets(http) {
             socket.emit('action', {type: actionTypes.ERROR, error: `The room ${action.room} doesn't exist`});
           }
           break;
+        case actionTypes.SERVER_NEW_TOPIC:
+          break;
       };
       socket.on('disconnect', function () {
         rooms.forEach((room) => {

@@ -18,9 +18,10 @@ class Container extends React.Component {
     users: React.PropTypes.array,
     error: React.PropTypes.string,
     actions: React.PropTypes.shape({
-      join: React.PropTypes.function,
-      create: React.PropTypes.function,
-      clearError: React.PropTypes.function
+      join: React.PropTypes.func.isRequired,
+      create: React.PropTypes.func.isRequired,
+      clearError: React.PropTypes.func.isRequired,
+      createTopic: React.PropTypes.func.isRequired
     })
   }
   constructor(props) {
@@ -41,6 +42,7 @@ class Container extends React.Component {
         <Room
           users={this.props.users}
           room={this.props.room}
+          createTopic={this.props.actions.createTopic}
         />
       );
     }
@@ -54,6 +56,7 @@ class Container extends React.Component {
         </RB.Alert>
       );
     }
+    return null;
   }
   render() {
     return (

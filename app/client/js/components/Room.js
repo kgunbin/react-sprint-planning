@@ -1,11 +1,13 @@
 import React from 'react';
 import * as RB from 'react-bootstrap';
 import User from './User';
+import Topic from './Topic';
 
 class Room extends React.Component {
   static propTypes = {
-    users: React.PropTypes.array.required,
-    room: React.PropTypes.string.required
+    users: React.PropTypes.array.isRequired,
+    room: React.PropTypes.number.isRequired,
+    createTopic: React.PropTypes.func.isRequired
   }
   constructor(props) {
     super(props);
@@ -13,8 +15,9 @@ class Room extends React.Component {
   render() {
     return (
       <div>
+        <h2>{'Connected to ' + this.props.room}</h2>
         <RB.Jumbotron>
-          <h2>{'Connected to ' + this.props.room}</h2>
+          <Topic onTopicSet={(t) => this.props.createTopic(t, this.props.room)} />
         </RB.Jumbotron>
 
         {
