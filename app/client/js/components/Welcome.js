@@ -1,5 +1,6 @@
 import React from 'react';
 import * as RB from 'react-bootstrap';
+import cookie from 'react-cookie';
 
 class Welcome extends React.Component {
   static propTypes = {
@@ -8,12 +9,16 @@ class Welcome extends React.Component {
   }
   constructor(props) {
     super(props);
+    debugger;
     this.state = {
       room: '',
-      username: ''
+      username: cookie.load('username')
     };
-    // this.handleRoomChange.bind(this);
   }
+  saveUsername = () => {
+    cookie.save('username', this.state.username, { path: '/', secure: true });
+  }
+
   handleRoomChange = (e) => {
     this.setState({
       room: e.target.value
@@ -40,7 +45,10 @@ class Welcome extends React.Component {
         </RB.Row>
         <RB.Row>
           <RB.Col md={4}>
-            <RB.Button onClick={() => this.props.onCreate(this.state.username)}>
+            <RB.Button onClick={() => {
+              this.saveUsername();
+              this.props.onCreate(this.state.username);
+            }}>
               Create new session
             </RB.Button>
           </RB.Col>
@@ -51,7 +59,10 @@ class Welcome extends React.Component {
             <RB.Input type='text' value={this.state.room} onChange={this.handleRoomChange}/>
           </RB.Col>
           <RB.Col md={3}>
-            <RB.Button bsStyle='primary' onClick={() => this.props.onJoin(this.state.room, this.state.username)}>
+            <RB.Button bsStyle='primary' onClick={() => {
+              this.saveUsername();
+              this.props.onJoin(this.state.room, this.state.username);
+            }}>
               Join
             </RB.Button>
           </RB.Col>
