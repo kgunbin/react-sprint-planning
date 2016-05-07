@@ -6,8 +6,9 @@ import Container from './components/Container';
 import reducers from './reducers';
 import io from 'socket.io-client';
 import createSocketIoMiddleware from 'redux-socket.io';
+import config from '../../shared/config';
 
-let socket = io('http://localhost:3009');
+let socket = io(`${config.protocol}://${config.host}:${config.port}`);
 
 let socketMiddleware = createSocketIoMiddleware(socket, 'SERVER_');
 let store = createStore(
