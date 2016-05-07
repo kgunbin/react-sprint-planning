@@ -1,10 +1,9 @@
-import { connect } from 'react-redux';
 import React from 'react';
+import { connect } from 'react-redux';
 import actionCreators from '../actions';
 import { bindActionCreators } from 'redux';
 import Welcome from './Welcome';
 import Room from './Room';
-import _ from 'lodash';
 import * as RB from 'react-bootstrap';
 
 class Container extends React.Component {
@@ -14,8 +13,14 @@ class Container extends React.Component {
     actions: null
   }
   static propTypes = {
-    room: React.PropTypes.number,
-    users: React.PropTypes.array,
+    session: React.PropTypes.shape({
+      room: React.PropTypes.number,
+      users: React.PropTypes.array
+    }),
+    topic: React.PropTypes.shape({
+      description: React.PropTypes.string,
+      votes: React.PropTypes.array
+    }),
     error: React.PropTypes.string,
     actions: React.PropTypes.shape({
       join: React.PropTypes.func.isRequired,
@@ -30,7 +35,7 @@ class Container extends React.Component {
   renderContent = () => {
     var ret;
 
-    if (this.props.room == null) {
+    if (this.props.session.room == null) {
       ret = (
         <Welcome
           onCreate={this.props.actions.create}
@@ -40,8 +45,9 @@ class Container extends React.Component {
     } else {
       ret = (
         <Room
-          users={this.props.users}
-          room={this.props.room}
+          users={this.props.session.users}
+          room={this.props.session.room}
+          topic={this.props.topic}
           createTopic={this.props.actions.createTopic}
         />
       );
@@ -68,8 +74,9 @@ class Container extends React.Component {
   }
 }
 
-export default connect((state) => (
-  Object.assign({}, {error: state.error}, _.pick(state.session, 'room', 'users'))
-), (dispatch) => ({
-  actions: bindActionCreators(actionCreators, dispatch)
-}))(Container);
+export default connect(
+  (state) => (state),
+  (dispatch) => ({
+    actions: bindActionCreators(actionCreators, dispatch)
+  })
+)(Container);

@@ -38,6 +38,8 @@ function initSockets(http) {
           }
           break;
         case actionTypes.SERVER_NEW_TOPIC:
+          console.log(JSON.stringify(action));
+          io.to(action.room).emit('action', {type: actionTypes.TOPIC_CREATED, description: action.name});
           break;
       };
       socket.on('disconnect', function () {

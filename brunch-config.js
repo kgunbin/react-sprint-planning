@@ -17,7 +17,7 @@ module.exports = {
   },
   server: {
     path: 'app/server/index.js',
-    port: 3009
+    port: process.env.RSP_PORT || 3009
   },
   plugins: {
     babel: {

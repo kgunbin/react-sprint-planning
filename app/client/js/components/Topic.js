@@ -3,7 +3,11 @@ import * as RB from 'react-bootstrap';
 
 export default class Topic extends React.Component {
   static propTypes = {
-    onTopicSet: React.PropTypes.func.isRequired
+    onTopicSet: React.PropTypes.func.isRequired,
+    topic: React.PropTypes.shape({
+      description: React.PropTypes.string,
+      votes: React.PropTypes.array
+    })
   }
 
   constructor(props) {
@@ -11,15 +15,15 @@ export default class Topic extends React.Component {
     this.state = {
       topicName: null
     };
-  }
 
+  }
   handleTopicChange = (e) => {
     this.setState({
       topicName: e.target.value
     });
   }
 
-  render() {
+  renderNoTopic = () => {
     return (
       <div>
         <RB.Input type='text' value={this.state.topicName} onChange={this.handleTopicChange} />
@@ -28,5 +32,17 @@ export default class Topic extends React.Component {
         </RB.Button>
       </div>
     );
+  }
+
+  renderTopic = () => {
+    return (
+      <div>
+        <h3>{this.props.topic.description}</h3>
+      </div>
+    );
+  }
+
+  render() {
+    return this.props.topic.description == null ? this.renderNoTopic() : this.renderTopic();
   }
 }

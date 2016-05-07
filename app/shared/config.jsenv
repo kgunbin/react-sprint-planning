@@ -1,0 +1,5 @@
+{
+  RSP_HOST: 'localhost',
+  RSP_PORT: 3009,
+  RSP_PROTOCOL: 'http'
+}

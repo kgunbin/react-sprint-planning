@@ -1,6 +1,6 @@
 import actionTypes from '../../../shared/constants';
 
-function createTopic(room, topicName) {
+function createTopic(topicName, room) {
   return {
     type: actionTypes.SERVER_NEW_TOPIC,
     room: room,

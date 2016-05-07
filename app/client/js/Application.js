@@ -8,7 +8,7 @@ import io from 'socket.io-client';
 import createSocketIoMiddleware from 'redux-socket.io';
 import config from '../../shared/config';
 
-let socket = io(`${config.protocol}://${config.host}:${config.port}`);
+let socket = io(`${config.RSP_PROTOCOL}://${config.RSP_HOST}:${config.RSP_PORT}`);
 
 let socketMiddleware = createSocketIoMiddleware(socket, 'SERVER_');
 let store = createStore(
