@@ -1,20 +1,20 @@
 import React from 'react';
 import * as RB from 'react-bootstrap';
-import cookie from 'react-cookie';
 
 class Welcome extends React.Component {
   static propTypes = {
     onCreate: React.PropTypes.func.isRequired,
     onJoin: React.PropTypes.func.isRequired
   }
+
   constructor(props) {
     super(props);
-    debugger;
-    this.state = {
-      room: '',
-      username: cookie.load('username')
-    };
   }
+
+  componentWillMount() {
+
+  }
+
   saveUsername = () => {
     cookie.save('username', this.state.username, { path: '/' });
   }

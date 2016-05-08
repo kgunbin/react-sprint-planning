@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import Welcome from './Welcome';
 import Room from './Room';
 import * as RB from 'react-bootstrap';
+import cookie from 'react-cookie';
+import url from 'url';
 
 class Container extends React.Component {
   static defaultProps = {
@@ -31,6 +33,10 @@ class Container extends React.Component {
   }
   constructor(props) {
     super(props);
+    this.state = {
+      room: url.parse(window.location.href, true).query.room,
+      username: cookie.load('username')
+    };
   }
   renderContent = () => {
     var ret;
@@ -38,6 +44,8 @@ class Container extends React.Component {
     if (this.props.session.room == null) {
       ret = (
         <Welcome
+          room={this.state.room}
+          username={this.state.username}
           onCreate={this.props.actions.create}
           onJoin={this.props.actions.join}
         />
