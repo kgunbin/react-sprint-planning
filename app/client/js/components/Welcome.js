@@ -16,7 +16,7 @@ class Welcome extends React.Component {
     };
   }
   saveUsername = () => {
-    cookie.save('username', this.state.username, { path: '/', secure: true });
+    cookie.save('username', this.state.username, { path: '/' });
   }
 
   handleRoomChange = (e) => {
