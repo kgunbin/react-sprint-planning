@@ -7,8 +7,7 @@ class Room extends React.Component {
   static propTypes = {
     users: React.PropTypes.array.isRequired,
     room: React.PropTypes.number.isRequired,
-    createTopic: React.PropTypes.func.isRequired,
-    topic: React.PropTypes.object
+    topicName: React.PropTypes.string
   }
   constructor(props) {
     super(props);
@@ -20,7 +19,7 @@ class Room extends React.Component {
         <RB.Jumbotron>
           <Topic
             {...this.props}
-            onTopicSet={(t) => this.props.createTopic(t, this.props.room)} />
+          />
         </RB.Jumbotron>
 
         {

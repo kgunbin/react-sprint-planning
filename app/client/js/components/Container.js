@@ -35,7 +35,8 @@ class Container extends React.Component {
     super(props);
     this.state = {
       room: url.parse(window.location.href, true).query.room,
-      username: cookie.load('username')
+      username: cookie.load('username'),
+      topic: {}
     };
   }
   renderContent = () => {
@@ -46,8 +47,10 @@ class Container extends React.Component {
         <Welcome
           room={this.state.room}
           username={this.state.username}
-          onCreate={this.props.actions.create}
-          onJoin={this.props.actions.join}
+          handleRoomChange={this.handleRoomChange}
+          handleUsernameChange={this.handleUsernameChange}
+          onCreate={() => this.props.actions.create(this.state.username)}
+          onJoin={() => this.props.actions.join(this.state.room, this.state.username)}
         />
       );
     } else {
@@ -55,8 +58,8 @@ class Container extends React.Component {
         <Room
           users={this.props.session.users}
           room={this.props.session.room}
-          topic={this.props.topic}
-          createTopic={this.props.actions.createTopic}
+          topicName={this.state.topic.description}
+          handleTopicChange={this.handleTopicChange}
         />
       );
     }
@@ -79,6 +82,26 @@ class Container extends React.Component {
         {this.renderContent()}
       </RB.Grid>
     );
+  }
+
+  handleRoomChange = (e) => {
+    this.setState({
+      room: e.target.value
+    });
+  }
+  handleUsernameChange = (e) => {
+    this.setState({
+      username: e.target.value
+    }, () => {
+      cookie.save('username', this.props.username, { path: '/' });
+    });
+  }
+  handleTopicChange = (e) => {
+    this.setState({
+      topicName: e.target.value
+    },() => {
+      this.props.actions.createTopic(this.state.topicName, this.state.room)
+    });
   }
 }
 

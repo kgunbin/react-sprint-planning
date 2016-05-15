@@ -6,29 +6,6 @@ class Welcome extends React.Component {
     onCreate: React.PropTypes.func.isRequired,
     onJoin: React.PropTypes.func.isRequired
   }
-
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillMount() {
-
-  }
-
-  saveUsername = () => {
-    cookie.save('username', this.state.username, { path: '/' });
-  }
-
-  handleRoomChange = (e) => {
-    this.setState({
-      room: e.target.value
-    });
-  }
-  handleUsernameChange = (e) => {
-    this.setState({
-      username: e.target.value
-    });
-  }
   render() {
     return (
       <div>
@@ -40,15 +17,12 @@ class Welcome extends React.Component {
             <p>Pick a user name</p>
           </RB.Col>
           <RB.Col md={6}>
-            <RB.Input type='text' value={this.state.username} onChange={this.handleUsernameChange} />
+            <RB.Input type='text' value={this.props.username} onChange={this.props.handleUsernameChange} />
           </RB.Col>
         </RB.Row>
         <RB.Row>
           <RB.Col md={4}>
-            <RB.Button onClick={() => {
-              this.saveUsername();
-              this.props.onCreate(this.state.username);
-            }}>
+            <RB.Button onClick={this.props.onCreate}>
               Create new session
             </RB.Button>
           </RB.Col>
@@ -56,13 +30,10 @@ class Welcome extends React.Component {
             <p>or</p>
           </RB.Col>
           <RB.Col md={4}>
-            <RB.Input type='text' value={this.state.room} onChange={this.handleRoomChange}/>
+            <RB.Input type='text' value={this.props.room} onChange={this.props.handleRoomChange}/>
           </RB.Col>
           <RB.Col md={3}>
-            <RB.Button bsStyle='primary' onClick={() => {
-              this.saveUsername();
-              this.props.onJoin(this.state.room, this.state.username);
-            }}>
+            <RB.Button bsStyle='primary' onClick={this.props.onJoin}>
               Join
             </RB.Button>
           </RB.Col>
