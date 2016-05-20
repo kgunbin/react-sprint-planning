@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import actionCreators from '../actions';
+import creators from '../actions';
 import { bindActionCreators } from 'redux';
 import Welcome from './Welcome';
 import Room from './Room';
@@ -15,6 +15,7 @@ class Container extends React.Component {
     actions: null
   }
   static propTypes = {
+    username: React.PropTypes.string,
     session: React.PropTypes.shape({
       room: React.PropTypes.number,
       users: React.PropTypes.array
@@ -58,7 +59,7 @@ class Container extends React.Component {
         <Room
           users={this.props.session.users}
           room={this.props.session.room}
-          topicName={this.state.topic.description}
+          topicName={this.props.topic.description}
           handleTopicChange={this.handleTopicChange}
         />
       );
@@ -99,8 +100,8 @@ class Container extends React.Component {
   handleTopicChange = (e) => {
     this.setState({
       topicName: e.target.value
-    },() => {
-      this.props.actions.createTopic(this.state.topicName, this.state.room)
+    }, () => {
+      this.props.actions.createTopic(this.state.topicName, this.props.session.room);
     });
   }
 }
@@ -108,6 +109,6 @@ class Container extends React.Component {
 export default connect(
   (state) => (state),
   (dispatch) => ({
-    actions: bindActionCreators(actionCreators, dispatch)
+    actions: bindActionCreators(creators, dispatch)
   })
 )(Container);
