@@ -17,7 +17,7 @@ class Container extends React.Component {
   static propTypes = {
     username: React.PropTypes.string,
     session: React.PropTypes.shape({
-      room: React.PropTypes.number,
+      room: React.PropTypes.object,
       users: React.PropTypes.array
     }),
     topic: React.PropTypes.shape({
@@ -61,6 +61,7 @@ class Container extends React.Component {
           room={this.props.session.room}
           topicName={this.props.topic.description}
           handleTopicChange={this.handleTopicChange}
+          handleVote={this.handleVote}
         />
       );
     }
@@ -101,8 +102,11 @@ class Container extends React.Component {
     this.setState({
       topicName: e.target.value
     }, () => {
-      this.props.actions.createTopic(this.state.topicName, this.props.session.room);
+      this.props.actions.createTopic(this.state.topicName, this.props.session.room.id);
     });
+  }
+  handleVote = (value) => {
+    this.props.actions.vote(value);
   }
 }
 

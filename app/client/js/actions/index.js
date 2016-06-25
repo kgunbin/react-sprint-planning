@@ -9,6 +9,23 @@ function clearError() {
   };
 }
 
-const creators = Object.assign({}, {clearError: clearError}, session, topic);
+function vote(vote) {
+  (dispatch, getState) => {
+    const state = getState();
+
+    dispatch({
+      type: actionTypes.SERVER_USER_VOTED,
+      username: state.session.me,
+      room: state.session.room,
+      vote: vote
+    });
+  };
+}
+
+const creators = Object.assign({},
+  {clearError},
+  vote,
+  session,
+  topic);
 
 export default creators;

@@ -7,16 +7,13 @@ import Vote from './Vote';
 class Room extends React.Component {
   static propTypes = {
     users: React.PropTypes.array.isRequired,
-    room: React.PropTypes.number.isRequired,
+    room: React.PropTypes.object.isRequired,
     topicName: React.PropTypes.string
-  }
-  constructor(props) {
-    super(props);
   }
   render() {
     return (
       <div>
-        <h2>{'Connected to ' + this.props.room}</h2>
+        <h2>{'Connected to ' + this.props.room.id}</h2>
         <RB.Jumbotron>
           <Topic
             {...this.props}
@@ -31,7 +28,7 @@ class Room extends React.Component {
           })
         }
 
-        <Vote />
+        <Vote {...this.props} />
       </div>
     );
   }

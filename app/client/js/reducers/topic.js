@@ -2,13 +2,23 @@ import { combineReducers } from 'redux';
 import actionTypes from '../../../shared/constants';
 
 function description(state = null, action) {
-  if (action.type === actionTypes.TOPIC_CREATED) {
-    return action.description;
+  switch (action.type) {
+    case actionTypes.TOPIC_CREATED:
+      return action.description;
+    case actionTypes.ROOM_JOINED:
+      return action.room.topic;
   }
   return state;
 };
 
 function votes(state = [], action) {
+  switch (action.type) {
+    case actionTypes.USER_VOTED:
+      return state.filter((v) => v.username !== action.username).concat({
+        username: action.username,
+        vote: action.vote
+      });
+  }
   return state;
 };
 

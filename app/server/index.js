@@ -17,29 +17,29 @@ function initSockets(http) {
 
   io.on('connection', (socket) => {
     socket.on('action', (action) => {
-      var room;
-
+      var room = rooms.find((c) => c.id == action.room);
+      if (room == null && action.type != actionTypes.SERVER_NEW_ROOM) {
+        socket.emit('action', {type: actionTypes.ERROR, error: `The room ${action.room} doesn't exist`});
+      }
       switch (action.type) {
         case actionTypes.SERVER_NEW_ROOM:
-          room = {id: ++lastRoomId, users: []};
-
+          room = {id: ++lastRoomId, users: [], votes: [], topic: ''};
           rooms.push(room);
           joinAndNotify(socket, room, action.username);
-          socket.emit('action', {type: actionTypes.ROOM_CREATED, room: lastRoomId});
+          socket.emit('action', {type: actionTypes.ROOM_CREATED, room: room});
           break;
         case actionTypes.SERVER_JOIN_ROOM:
-          room = rooms.find((c) => c.id == action.room);
-
-          if (room != null) {
-            joinAndNotify(socket, room, action.username);
-            socket.emit('action', {type: actionTypes.ROOM_JOINED, room: room.id});
-          } else {
-            socket.emit('action', {type: actionTypes.ERROR, error: `The room ${action.room} doesn't exist`});
-          }
+          joinAndNotify(socket, room, action.username);
+          socket.emit('action', {type: actionTypes.ROOM_JOINED, room: room});
           break;
         case actionTypes.SERVER_NEW_TOPIC:
+          room.topic = action.name;
           io.to(action.room).emit('action', {type: actionTypes.TOPIC_CREATED, description: action.name});
           break;
+        case actionTypes.SERVER_USER_VOTED:
+          io.to(action.room).emit('action', {type: actionTypes.USER_VOTED, username: action.username, vote: action.vote});
+          room = rooms.find((c) => c.id == action.room);
+
       };
       socket.on('disconnect', function () {
         rooms.forEach((room) => {

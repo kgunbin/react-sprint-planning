@@ -8,8 +8,10 @@ function users(state = [], action) {
   return state;
 };
 
-function me(state = {id: null, username: null}, action) {
-
+function me(state = '', action) {
+  if ([actionTypes.SERVER_NEW_ROOM, actionTypes.SERVER_JOIN_ROOM].indexOf(action.type) > -1) {
+    return action.username;
+  }
   return state;
 };
 
