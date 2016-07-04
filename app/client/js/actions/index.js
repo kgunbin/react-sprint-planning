@@ -10,21 +10,20 @@ function clearError() {
 }
 
 function vote(vote) {
-  (dispatch, getState) => {
+  return (dispatch, getState) => {
     const state = getState();
 
     dispatch({
       type: actionTypes.SERVER_USER_VOTED,
       username: state.session.me,
-      room: state.session.room,
+      room: state.session.room.id,
       vote: vote
     });
   };
 }
 
 const creators = Object.assign({},
-  {clearError},
-  vote,
+  {vote, clearError},
   session,
   topic);
 

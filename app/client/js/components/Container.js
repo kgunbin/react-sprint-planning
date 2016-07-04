@@ -62,6 +62,7 @@ class Container extends React.Component {
           topicName={this.props.topic.description}
           handleTopicChange={this.handleTopicChange}
           handleVote={this.handleVote}
+          votes={this.props.topic.votes}
         />
       );
     }

@@ -11,6 +11,8 @@ class Room extends React.Component {
     topicName: React.PropTypes.string
   }
   render() {
+    const showVotes = this.props.votes.length === this.props.users.length;
+
     return (
       <div>
         <h2>{'Connected to ' + this.props.room.id}</h2>
@@ -22,8 +24,10 @@ class Room extends React.Component {
 
         {
           this.props.users.map((user, i) => {
+            const vote = (this.props.votes.find((v) => v.username === user) || {}).vote;
+
             return (
-              <User key={`user_${i}`} username={user} />
+              <User key={`user_${i}`} username={user} vote={vote} showVotes={showVotes} />
             );
           })
         }
