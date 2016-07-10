@@ -29,7 +29,8 @@ class Container extends React.Component {
       join: React.PropTypes.func.isRequired,
       create: React.PropTypes.func.isRequired,
       clearError: React.PropTypes.func.isRequired,
-      createTopic: React.PropTypes.func.isRequired
+      createTopic: React.PropTypes.func.isRequired,
+      vote: React.PropTypes.func.isRequired
     })
   }
   constructor(props) {
@@ -57,12 +58,14 @@ class Container extends React.Component {
     } else {
       ret = (
         <Room
+          me={this.props.session.me}
           users={this.props.session.users}
           room={this.props.session.room}
+          votes={this.props.topic.votes}
           topicName={this.props.topic.description}
           handleTopicChange={this.handleTopicChange}
-          handleVote={this.handleVote}
-          votes={this.props.topic.votes}
+          handleVote={this.props.actions.vote}
+          handleResetVotes={this.props.actions.resetVotes}
         />
       );
     }
@@ -105,9 +108,6 @@ class Container extends React.Component {
     }, () => {
       this.props.actions.createTopic(this.state.topicName, this.props.session.room.id);
     });
-  }
-  handleVote = (value) => {
-    this.props.actions.vote(value);
   }
 }
 

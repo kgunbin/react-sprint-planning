@@ -14,8 +14,8 @@ function description(state = null, action) {
 function votes(state = [], action) {
   switch (action.type) {
     case actionTypes.USER_VOTED:
-      return state.filter((v) => v.username !== action.username).concat({
-        username: action.username,
+      return state.filter((v) => v.userid !== action.userid).concat({
+        userid: action.userid,
         vote: action.vote
       });
   }

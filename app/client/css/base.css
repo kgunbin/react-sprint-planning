@@ -1,7 +1,35 @@
 .no-vote {
-  background-color: red;
+}
+
+.current-user {
+  font-weight: bolder;
+}
+
+@-webkit-keyframes fadeIt {
+  0%   { background-color: #FFFFFF; }
+  50%  { background-color: #AD301B; }
+  100% { background-color: lightblue; }
+}
+@-moz-keyframes fadeIt {
+  0%   { background-color: #FFFFFF; }
+  50%  { background-color: #AD301B; }
+  100% { background-color: lightblue; }
+}
+@-o-keyframes fadeIt {
+  0%   { background-color: #FFFFFF; }
+  50%  { background-color: #AD301B; }
+  100% { background-color: lightblue; }
+}
+@keyframes fadeIt {
+  0%   { background-color: #FFFFFF; }
+  50%  { background-color: #AD301B; }
+  100% { background-color: lightblue; }
 }
 
 .hidden-vote {
-  background-color: green;
+    background-image:none !important;
+    -webkit-animation: fadeIt 1s ease-in-out;
+       -moz-animation: fadeIt 1s ease-in-out;
+         -o-animation: fadeIt 1s ease-in-out;
+            animation: fadeIt 1s ease-in-out;
 }

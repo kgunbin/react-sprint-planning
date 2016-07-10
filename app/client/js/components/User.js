@@ -1,9 +1,10 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
+import classnames from 'classnames';
 
 export default class User extends React.Component {
   static propTypes = {
-    username: React.PropTypes.string,
+    user: React.PropTypes.object,
     vote: React.PropTypes.string,
     showVotes: React.PropTypes.bool
   }
@@ -22,10 +23,16 @@ export default class User extends React.Component {
     return ret;
   }
   render() {
+    const className = {
+      'hidden-vote': this.props.vote && !this.props.showVotes,
+      'no-vote': !this.props.vote,
+      'current-user': this.props.me
+    };
+
     return (
-      <Row>
+      <Row className={classnames(className)}>
         <Col md={4}>
-          <h5>{this.props.username}</h5>
+          <h5>{this.props.user.name}</h5>
         </Col>
         <Col md={1}>
           {this.renderVote()}

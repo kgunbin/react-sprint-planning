@@ -10,7 +10,9 @@ class Room extends React.Component {
     room: React.PropTypes.object.isRequired,
     topicName: React.PropTypes.string
   }
+
   render() {
+    const that = this;
     const showVotes = this.props.votes.length === this.props.users.length;
 
     return (
@@ -24,10 +26,12 @@ class Room extends React.Component {
 
         {
           this.props.users.map((user, i) => {
-            const vote = (this.props.votes.find((v) => v.username === user) || {}).vote;
+            const vote = (that.props.votes.find(v => v.userid === user.id) || {})['vote'];
+            const me = (that.props.me === user.id);
+            const props = {user, showVotes, vote, me};
 
             return (
-              <User key={`user_${i}`} username={user} vote={vote} showVotes={showVotes} />
+              <User key={`user_${i}`} {...props} />
             );
           })
         }

@@ -8,6 +8,7 @@ export default class Topic extends React.Component {
     return (
       <div>
         <RB.Input type='text' value={this.props.topicName} onChange={this.props.handleTopicChange} />
+        <RB.Button onClick={this.props.handleResetVotes}>Reset Votes</RB.Button>
       </div>
     );
   }

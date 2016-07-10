@@ -12,7 +12,8 @@ function initSockets(http) {
   function joinAndNotify(socket, room, name) {
     socket.join(room.id);
     room.users.push({name: name, id: socket.id});
-    io.to(room.id).emit('action', {type: actionTypes.NEW_USER, users: _.map(room.users, 'name')});
+    io.to(room.id).emit('action', {type: actionTypes.NEW_USER, users: room.users});
+    socket.emit('action', {type: actionTypes.YOU, userid: socket.id});
   }
 
   io.on('connection', (socket) => {
@@ -37,9 +38,10 @@ function initSockets(http) {
           io.to(action.room).emit('action', {type: actionTypes.TOPIC_CREATED, description: action.name});
           break;
         case actionTypes.SERVER_USER_VOTED:
-          io.to(action.room).emit('action', {type: actionTypes.USER_VOTED, username: action.username, vote: action.vote});
-          room = rooms.find((c) => c.id == action.room);
-
+          io.to(action.room).emit('action', {type: actionTypes.USER_VOTED, userid: socket.id, vote: action.vote});
+          break;
+        case actionTypes.SERVER_RESET_VOTES:
+          
       };
       socket.on('disconnect', function () {
         rooms.forEach((room) => {
@@ -47,7 +49,7 @@ function initSockets(http) {
 
           if (user) {
             room.users.splice(room.users.indexOf(user), 1);
-            io.to(room.id).emit('action', {type: actionTypes.USER_LEFT, users: _.map(room.users, 'name')});
+            io.to(room.id).emit('action', {type: actionTypes.USER_LEFT, users: room.users});
           }
           // Remove empty rooms
           if (room.users.length === 0) {

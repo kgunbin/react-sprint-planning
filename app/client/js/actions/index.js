@@ -15,15 +15,20 @@ function vote(vote) {
 
     dispatch({
       type: actionTypes.SERVER_USER_VOTED,
-      username: state.session.me,
       room: state.session.room.id,
       vote: vote
     });
   };
 }
 
+function resetVotes() {
+  return {
+    type: actionTypes.SERVER_RESET_VOTES
+  }
+}
+
 const creators = Object.assign({},
-  {vote, clearError},
+  {vote, clearError, resetVotes},
   session,
   topic);
 
